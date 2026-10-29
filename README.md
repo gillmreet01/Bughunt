@@ -1,5 +1,8 @@
 # BugHunt
 
+- **Live demo:** https://bughunt-s2x0.onrender.com (free hosting: the first visit can take about a minute to wake up)
+- **Source code:** https://github.com/gillmreet01/Bughunt
+
 BugHunt is a dark, responsive debugging practice platform for Python, Java and C++. Users inspect intentionally broken snippets, select a correction, request hints, and review explanations after submission. The app uses a vanilla HTML/CSS/JavaScript client, Express REST API, MongoDB/Mongoose persistence, and JWT authentication.
 
 ## College project abstract
