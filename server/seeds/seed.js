@@ -16,9 +16,10 @@ async function seed() {
   await connectDatabase(config);
   try {
     for (const challenge of challenges) {
+      const { options, correctIndex, buggyCode, ...rest } = challenge;
       await Challenge.updateOne(
         { title: challenge.title, language: challenge.language },
-        { $setOnInsert: challenge },
+        { $setOnInsert: rest, $set: { options, correctIndex, buggyCode } },
         { upsert: true },
       );
     }

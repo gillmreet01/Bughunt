@@ -132,3 +132,14 @@ The dashboard provides database-backed summary counts, daily registration and su
 To promote the first administrator, use the existing trusted local database procedure above, then sign out and back in so the new signed token contains the assigned role. Do not add a public promotion route or expose a database URI. The dashboard does not provide role editing, account deletion or account suspension.
 
 Run `npm test` to execute the API authorization, dashboard, management and existing regression tests. Admin dashboard data requires the configured MongoDB connection; automated admin route tests stub model queries and do not claim a live database connection.
+
+## Hardening changes (second revision)
+
+- The correct option is no longer always first: the seed rotates the options, and `npm run seed` refreshes `options`, `correctIndex` and `buggyCode` of existing challenges.
+- Submit requires a numeric answer and awards XP atomically (unique partial index on awarded attempts), so parallel requests cannot award XP twice.
+- The challenge detail returns only `hintCount`; hint text comes from the hint route, one at a time.
+- Challenge search escapes regular-expression characters; paging and the solved filter are fixed and the default page size is 50, so all challenges are listed.
+- Achievements count distinct solved challenges; the dashboard streak is not shown stale; the leaderboard uses a single aggregation.
+- Strict `Bearer` token parsing with HS256 pinned; dummy password hash for unknown e-mails; rate limits on hint, submit and password routes; unknown `/api` paths return JSON 404.
+- On a host behind a proxy (for example Render) set `TRUST_PROXY=1` so rate limits use the real client address.
+- Tests: `npm run test:unit` (31 tests, no database) and `npm run test:integration` (20 tests with an in-memory MongoDB; the first run downloads `mongod`).
